@@ -1,0 +1,45 @@
+// this constant won't change:
+const int ledPin = 0; //D3
+const int  buttonPin = 2; //D4
+
+//const int ledPin = 5; //D1
+//const int  buttonPin = 4; //D2
+
+
+// Variables will change:
+int buttonPushCounter = 0;
+int buttonState = 0;
+int lastButtonState = 0;
+
+void setup() {
+  pinMode(buttonPin, INPUT);
+  pinMode(ledPin, OUTPUT);
+  Serial.begin(9600);
+}
+
+
+void loop() {
+  buttonState = digitalRead(buttonPin);
+  if (buttonState != lastButtonState) {
+    if (buttonState == HIGH) {
+      buttonPushCounter++;
+      Serial.println("on");
+      Serial.print("number of button pushes: ");
+      Serial.println(buttonPushCounter);
+    } else {
+      Serial.println("off");
+    }
+    // Delay a little bit to avoid bouncing
+    delay(50);
+  }
+  // save the current state as the last state
+  lastButtonState = buttonState;
+
+
+  // division of two numbers:
+  if (buttonPushCounter % 2 == 0) {
+    digitalWrite(ledPin, HIGH);
+  } else {
+    digitalWrite(ledPin, LOW);
+  }
+}
